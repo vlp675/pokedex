@@ -4,4 +4,4 @@ const PkmnType = [
     "ROCHE", "SPECTRE", "DRAGON", "TÉNÈBRES", "ACIER", "FÉE"
   ];
   
-  export default PkmnType;
+export default PkmnType;
