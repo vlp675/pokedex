@@ -12,9 +12,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        validate: [validateEmail, 'Please fill a valid email address']
-    }, 
-    password: String
+        validate: [validateEmail, 'Please fill a valid email address'],
+    },
+    password: String,
+    role: {
+        type: String,
+        default: "USER"
+    }
 });
 
 userSchema.pre('save', function (next) {
