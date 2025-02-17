@@ -11,10 +11,11 @@ router.get('/:id_or_email', pkmnController.getPokemon);
 
 router.get('/', pkmnController.getPokemons);
 
+router.delete('/:id', pkmnController.deleteRegion);
+
 router.delete('/:id', pkmnController.deletePokemon);
 
-router.put('/:id', pkmnController.updatePokemon);
+router.patch('/:id', pkmnController.updatePokemon);
 
-router.delete('/:id', pkmnController.deleteRegion);
 
 module.exports = router;
