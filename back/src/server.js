@@ -17,9 +17,13 @@ app.use(express.json());
 const typesRouter = require('./routes/type.js');
 app.use('/api', typesRouter);
 
-//Dresseurs
+//User
 const UserRouter = require('./routes/users.js');
 app.use('/api/users', UserRouter);
+
+//Trainer
+const TrainerRouter = require('./routes/trainer.js');
+app.use('/api/trainer', TrainerRouter);
 
 // const keygen = require('./keygen.js');
 

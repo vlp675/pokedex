@@ -81,11 +81,10 @@ async function fetchPokemon(i) {
     }
 }
 
-// Exécuter toutes les requêtes avec un délai de 300ms entre chaque
 async function fetchAllPokemons() {
     for (let i = 0; i < 1025; i++) {
         await fetchPokemon(i);
-        await sleep(30); // 300ms d'attente entre chaque requête
+        await sleep(30); // 300ms 
     }
 }
 

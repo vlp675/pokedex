@@ -20,28 +20,28 @@ class PkmnTypeService {
         return this.PokemonModel.findById(id);
     }
 
-    getPokemons(fields) {
+    async getPokemons(fields) {
         const filter = {};
     
         if (fields.partialName) {
-            filter.name = { $regex: fields.partialName, '$options' : 'i'};
+            filter.name = { $regex: fields.partialName, '$options': 'i' };
         }
     
-        if (fields.typeOne) {
-            filter.types[0] = fields.typeOne;
-        } //A FINIR
+        if (fields.typeOne && fields.typeTwo) {
+            filter.types = { $all: [fields.typeOne, fields.typeTwo] };
+        } else if (fields.typeOne) {
+            filter['types.0'] = fields.typeOne;
+        } else if (fields.typeTwo) {
+            filter['types.1'] = fields.typeTwo;
+        }
     
-        if (fields.typeTwo) {
-            filter.types[1] = fields.typeTwo;
-        } //A FINIR
-    
-        const page = fields.page ? parseInt(fields.page, 10) : 1;
-        const size = fields.size ? parseInt(fields.size, 10) : 20;
+        const page = fields.page || 1;
+        const size = fields.size || 10;
         const skip = (page - 1) * size;
     
-        return this.PokemonModel.find(filter).skip(skip).limit(size);
+        return await this.PokemonModel.find(filter).skip(skip).limit(size);
     }
-    
+
     getPokemonByName(name) {
         return this.PokemonModel.findOne({ name: name });
     }
@@ -61,25 +61,25 @@ class PkmnTypeService {
         if (!idRegion) {
             throw new Error(`ID de région manquant pour le Pokémon ${id}.`);
         }
-    
+
         const pokemon = await this.PokemonModel.findById(id);
-    
+
         if (!pokemon) {
             throw new Error(`Pokémon avec l'ID ${id} non trouvé.`);
         }
-    
+
         const regionExists = pokemon.regions.some(region => region._id.toString() === idRegion);
-    
+
         if (!regionExists) {
             throw new Error(`La région avec l'ID ${idRegion} n'existe pas pour ce Pokémon.`);
         }
-    
+
         const updatedPokemon = await this.PokemonModel.findByIdAndUpdate(
             id,
             { $pull: { regions: { _id: idRegion } } },
             { new: true }
         );
-    
+
         return updatedPokemon;
     }
 }

@@ -17,7 +17,6 @@ exports.addPokemon = async (req, res) => {
 
         if (req.body.regions && req.body.regions.length > 0) {
             for (const region of req.body.regions) {
-                console.log(region);
                 await pokemonService.createRegion(pokemon._id, region);
             }
         }
