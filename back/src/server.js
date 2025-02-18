@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 3001;
 app.get('/', (req, res) => {
@@ -9,8 +10,13 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 });
 
-//Gérer les posts
-app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,POST,PUT,PATCH,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
+
 app.use(express.json());
 
 //Types de pokémons

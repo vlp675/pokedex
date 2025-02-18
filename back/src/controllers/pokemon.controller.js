@@ -57,16 +57,16 @@ exports.getPokemon = async (req, res) => {
         let pokemon;
 
         if (ObjectId.isValid(req.params.id_or_email)) {
-            pokemon = await userService.getPokemonById(req.params.id_or_email);
+            pokemon = await pokemonService.getPokemonById(req.params.id_or_email);
         } else {
-            pokemon = await userService.getPokemonByName(req.params.id_or_email);
+            pokemon = await pokemonService.getPokemonByName(req.params.id_or_email);
         }
 
-        if (user.id == req.auth.userId) {
+        // if (user.id == req.auth.userId) { //Faut rajouter du code ici
             res.status(200).send({ pokemon });
-        } else {
-            res.status(401).send("Cherche avec une autre API oui !");
-        }
+        // } else {
+            // res.status(401).send("Cherche avec une autre API oui !");
+        // }
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -74,12 +74,16 @@ exports.getPokemon = async (req, res) => {
 
 exports.getPokemons = async (req, res) => {
     try {
-        const pokemons = await pokemonService.getPokemons(req.body);
+        const { partialName, typeOne, typeTwo, page, size } = req.query;
+
+        const pokemons = await pokemonService.getPokemons({ partialName, typeOne, typeTwo, page, size });
+
         res.status(200).send(pokemons);
     } catch (err) {
         res.status(400).send({ message: err.message });
     }
 };
+
 
 exports.deletePokemon = async (req, res) => {
     try {
@@ -110,8 +114,6 @@ exports.updatePokemon = async (req, res) => {
 exports.deleteRegion = async (req, res) => {
     try {
         const pkmn = await pokemonService.deleteRegionById(req.params.id, req.body.id_region);
-
-        console.log(req.body.id_region)
 
         res.status(200).send({
             message: `Pokémon ${pkmn.name} mis à jour avec une région en moins`

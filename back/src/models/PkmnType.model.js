@@ -1,7 +1,7 @@
 const PkmnType = [
-    "NORMAL", "FEU", "EAU", "PLANTE", "ÉLECTRIQUE", "GLACE",
-    "COMBAT", "POISON", "SOL", "VOL", "PSY", "INSECTE",
-    "ROCHE", "SPECTRE", "DRAGON", "TÉNÈBRES", "ACIER", "FÉE"
-  ];
-  
+  "NORMAL", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE",
+  "FIGHTING", "POISON", "GROUND", "FLYING", "PSYCHIC", "BUG",
+  "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY"
+];
+
 export default PkmnType;

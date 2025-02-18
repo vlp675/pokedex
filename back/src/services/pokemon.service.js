@@ -35,8 +35,8 @@ class PkmnTypeService {
             filter['types.1'] = fields.typeTwo;
         }
     
-        const page = fields.page || 1;
-        const size = fields.size || 10;
+        const page = fields.page;
+        const size = fields.size;
         const skip = (page - 1) * size;
     
         return await this.PokemonModel.find(filter).skip(skip).limit(size);

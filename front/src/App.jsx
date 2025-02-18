@@ -1,33 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Login from './auth/login.jsx'
+import Register from './auth/register.jsx'
+import Middleware from './middleware/middleware.jsx'
+import Dashboard from './pokedex/dashboard.jsx'
+import User from './pokedex/user.jsx'
+import Trainer from './pokedex/trainer.jsx'
+import PokedexList from './pokedex/pokedexList.jsx'
+import PokedexDetail from './pokedex/pokedexDetail.jsx'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Router>
+        <Routes>
+          {/* Login */}
+          <Route path='/' element={<Login />} />
+
+          {/* Register */}
+          <Route path='/register' element={<Register />} />
+
+          {/* Dashboard */}
+          <Route path='/dashboard' element={
+            <Middleware>
+              <Dashboard />
+            </Middleware>
+          } />
+
+          {/* User */}
+          <Route path='/user' element={
+            <Middleware>
+              <User />
+            </Middleware>
+          } />
+
+          {/* Trainer */}
+          <Route path='/trainer' element={
+            <Middleware>
+              <Trainer />
+            </Middleware>
+          } />
+
+          {/* Pokedex List */}
+          <Route path='/pokedex-list' element={
+            <Middleware>
+              <PokedexList />
+            </Middleware>
+          } />
+
+          {/* Pokedex Detail */}
+          <Route path='/pokemon-detail/:id' element={
+            <Middleware>
+              <PokedexDetail />
+            </Middleware>
+          } />
+        </Routes>
+      </Router>
     </>
   )
 }

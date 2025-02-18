@@ -1,10 +1,16 @@
 const TrainerService = require('../services/Trainer.service.js');
+const UserService = require('../services/user.service.js');
 
 const trainerService = new TrainerService();
+const userService = new UserService();
 
 exports.getTrainer = async (req, res) => {
     try {
-        const trainer = await trainerService.getTrainerById(req.body.id);
+        const userId = req.auth.userId;
+
+        const user = await userService.getUserById(userId);
+
+        const trainer = await trainerService.getTrainerByUserName(user.userName);
 
         if (!trainer) {
             return res.status(404).send("Trainer not found");
@@ -84,8 +90,6 @@ exports.markPokemon = async (req, res) => {
     try {
         const userId = req.auth.userId;
         const { pokemonId, isCaptured } = req.body;
-
-        console.log("isCaptured:", isCaptured);
 
         const pokemon = await pokemonService.getPokemonById(pokemonId);
         if (!pokemon) {
