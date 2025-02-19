@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../api/jwt"; 
+import { useNavigate, Link } from "react-router-dom";
+import { login } from "../api/jwt";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(""); 
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ function Login() {
         const response = await login(email, password);
 
         if (response && response.token) {
-            navigate("/"); 
+            navigate("/");
         } else {
             setErrorMessage(response?.message || "Échec de connexion, vérifiez vos identifiants.");
         }
@@ -47,6 +47,7 @@ function Login() {
                 </div>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
                 <button type="submit">Se connecter</button>
+                <Link to="/">Retourner à la liste</Link>
             </form>
         </div>
     );

@@ -1,8 +1,10 @@
 const TrainerService = require('../services/Trainer.service.js');
+const PokemonService = require('../services/Pokemon.service.js');
 const UserService = require('../services/user.service.js');
 
 const trainerService = new TrainerService();
 const userService = new UserService();
+const pokemonService = new PokemonService();
 
 exports.getTrainer = async (req, res) => {
     try {
@@ -38,7 +40,6 @@ exports.updateTrainer = async (req, res) => {
 };
 
 exports.deleteTrainer = async (req, res) => {
-    console.log(req)
     try {
         const trainer = await trainerService.getTrainerById(req.body.id);
 
@@ -93,7 +94,7 @@ exports.markPokemon = async (req, res) => {
             return res.status(404).send({ message: "Pokémon non trouvé." });
         }
 
-        const trainer = await trainerService.addPokemonToTrainer(userId, pokemonId, isCaptured);
+        const trainer = await trainerService.markPokemon(userId, pokemonId, isCaptured);
 
         res.status(200).send(trainer);
     } catch (err) {

@@ -3,6 +3,8 @@ const { getUser } = require('../controllers/user.controller.js');
 class TrainerService {
   constructor() {
     this.TrainerModel = require('../models/trainer.model.js');
+    const UserService = require('../services/user.service.js');
+    this.userService = new UserService();
   }
 
   async getTrainerById(id) {
@@ -17,7 +19,6 @@ class TrainerService {
     return await this.TrainerModel.findOne({ userName });
   }
 
-
   async updateTrainerByUsername(trainerName, trainerData) {
     return await this.TrainerModel.findOneAndUpdate(
       { trainerName },
@@ -31,11 +32,7 @@ class TrainerService {
   }
 
   async createTrainer(userId, fields) {
-    const UserService = require('../services/user.service.js');
-
-    const userService = new UserService();
-
-    const user = await userService.getUserById(userId);
+    const user = await this.userService.getUserById(userId);
     if (!user) {
       throw new Error("Utilisateur non trouvé la team");
     }
@@ -64,7 +61,7 @@ class TrainerService {
       ? true
       : false;
 
-    if (isCaptured === "false") {
+    if (isCaptured === false) {
       if (isAlreadySeen) {
         throw new Error("Ce pokémon a déjà été vu");
       }
@@ -92,7 +89,6 @@ class TrainerService {
 
     return trainer;
   }
-
 }
 
 module.exports = TrainerService;

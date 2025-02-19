@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { getPokemons } from "../api/pkmn";
 import { getPokemonTypes } from "../api/pkmnType.js";
 import PokemonListItem from "../composants/pokemonListItem";
+import { checkUser } from "../api/user.js";
+import { getTrainer, markPokemon } from "../api/trainer.js";
 
 function PokedexList() {
     const [pokemons, setPokemons] = useState([]);
@@ -13,11 +15,19 @@ function PokedexList() {
     const [type2, setType2] = useState(localStorage.getItem("type2") || "");
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPages, setMaxPages] = useState(1);
+    const [isUserConnected, setIsUserConnected] = useState(null);
+    const [trainer, setTrainer] = useState(null);
 
     useEffect(() => {
+        verifyUser();
+
+        if (isUserConnected) {
+            fetchTrainer();
+        }
         fetchPokemons();
         fetchPokemonTypes();
-    }, [searchTerm, type1, type2, currentPage]);
+
+    }, [searchTerm, type1, type2, currentPage, isUserConnected]);
 
     async function fetchPokemons() {
         const data = await getPokemons(searchTerm, type1, type2, currentPage, 50);
@@ -34,15 +44,46 @@ function PokedexList() {
         }
     }
 
+    async function fetchTrainer() {
+        try {
+            const data = await getTrainer();
+            if (data?.trainer) {
+                setTrainer(data.trainer);
+            } else {
+                setTrainer(null);
+            }
+        } catch {
+            setTrainer(null);
+        }
+    }
+
+    async function verifyUser() {
+        const response = await checkUser();
+        setIsUserConnected(response.isAuthenticated);
+    }
+
     useEffect(() => {
         localStorage.setItem("searchTerm", searchTerm);
         localStorage.setItem("type1", type1);
         localStorage.setItem("type2", type2);
+
     }, [searchTerm, type1, type2]);
 
     const handleFilterSubmit = () => {
         setCurrentPage(1);
         fetchPokemons();
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("jwt");
+        setIsUserConnected(false);
+        window.location.reload();
+    };
+
+    const handleMarkPokemon = (pokemonId, isCatched) => {
+        markPokemon(pokemonId, isCatched).then(() => {
+            fetchTrainer();
+        });
     };
 
     return (
@@ -51,9 +92,19 @@ function PokedexList() {
             <p>Bonjour</p>
 
             <nav>
-                <ul>
-                    <li><Link to="/user">Page Utilisateur</Link></li>
-                    <li><Link to="/trainer">Page Entraîneur</Link></li>
+                <ul style={{ listStyle: "none" }}>
+                    {isUserConnected ? (
+                        <>
+                            <li><Link to="/user">Utilisateur</Link></li>
+                            <li><Link to="/trainer">Entraîneur</Link></li>
+                            <li><Link onClick={handleLogout}>Déconnexion</Link></li>
+                        </>
+                    ) : (
+                        <>
+                            <li><Link to="/login">Se connecter</Link></li>
+                            <li><Link to="/register">S'inscrire</Link></li>
+                        </>
+                    )}
                 </ul>
             </nav>
 
@@ -94,9 +145,23 @@ function PokedexList() {
             )}
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>
-                {pokemons.map((pokemon, index) => (
-                    <PokemonListItem key={index} pokemon={pokemon} />
-                ))}
+                {pokemons.map((pokemon, index) => {
+                    const isCatched = trainer && trainer.pkmnCatch.includes(pokemon._id);
+                    const isSeen = trainer && trainer.pkmnSeen.includes(pokemon._id);
+                    const isTrainerDefined = !!trainer;  
+
+                    return (
+                        <PokemonListItem
+                            key={index}
+                            pokemon={pokemon}
+                            isUserConnected={isUserConnected}
+                            isCatched={isCatched}
+                            isSeen={isSeen}
+                            onMarkPokemon={handleMarkPokemon}
+                            isTrainerDefined={isTrainerDefined} 
+                        />
+                    );
+                })}
             </div>
 
             <div style={{ marginTop: "20px" }}>

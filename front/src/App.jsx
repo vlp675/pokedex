@@ -15,10 +15,7 @@ function App() {
       <Router>
         <Routes>
           {/* Home avec la liste des pokémons */}
-          <Route path='/' element={
-            <Middleware>
-              <PokedexList />
-            </Middleware>} />
+          <Route path='/' element={<PokedexList /> } />
 
           {/* Login */}
           <Route path='/login' element={<Login />} />

@@ -10,23 +10,22 @@ function Trainer() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getTrainer();
-        if (data?.trainer) {
-          setTrainer(data.trainer);
-          setEditedTrainer(data.trainer);
-        } else {
-          setTrainer(null); 
-        }
-      } catch {
-        setTrainer(null);
-      }
-    }
-  
     fetchData();
   }, []);
   
+  async function fetchData() {
+    try {
+      const data = await getTrainer();
+      if (data?.trainer) {
+        setTrainer(data.trainer);
+        setEditedTrainer(data.trainer);
+      } else {
+        setTrainer(null); 
+      }
+    } catch {
+      setTrainer(null);
+    }
+  }
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -97,10 +96,10 @@ function Trainer() {
           </label>
           <br />
           <button onClick={handleCreateClick}>Créer le Trainer</button>
+          <button onClick={() => navigate("/")}>Retour à la liste</button>
         </div>
       ) : (
         <>
-          {/* If the trainer exists, show the trainer info */}
           {isEditing ? (
             <>
               <label>

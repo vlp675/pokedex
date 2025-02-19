@@ -8,10 +8,6 @@ export async function login(email, password) {
         body: JSON.stringify({ email, password }),
       });
   
-      if (!response.ok) {
-        throw new Error(`Erreur: ${response.status}`);
-      }
-  
       const data = await response.json();
       localStorage.setItem("jwt", data.token);
       return data;
