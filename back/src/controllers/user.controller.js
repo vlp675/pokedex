@@ -11,6 +11,8 @@ exports.getUser = async (req, res) => {
 
         if (ObjectId.isValid(req.params.id_or_email)) {
             user = await userService.getUserById(req.params.id_or_email);
+        } if (req.auth.userId) {
+            user = await userService.getUserById(req.auth.userId);
         } else {
             user = await userService.getUserByEmail(req.params.id_or_email);
         }

@@ -12,10 +12,6 @@ exports.getTrainer = async (req, res) => {
 
         const trainer = await trainerService.getTrainerByUserName(user.userName);
 
-        if (!trainer) {
-            return res.status(404).send("Trainer not found");
-        }
-
         res.status(200).send({ trainer });
     } catch (err) {
         res.status(400).send(err.message);
@@ -25,7 +21,7 @@ exports.getTrainer = async (req, res) => {
 exports.updateTrainer = async (req, res) => {
     try {
         const trainerData = req.body;
-        const trainer = await trainerService.getTrainerById(req.body.id);
+        const trainer = await trainerService.getTrainerById(req.body._id);
 
         if (!trainer) {
             return res.status(404).send("Trainer not found");
@@ -42,6 +38,7 @@ exports.updateTrainer = async (req, res) => {
 };
 
 exports.deleteTrainer = async (req, res) => {
+    console.log(req)
     try {
         const trainer = await trainerService.getTrainerById(req.body.id);
 

@@ -1,5 +1,5 @@
 export async function getUser() {
-    const url = `http://localhost:3001/api/user/`;
+    const url = `http://localhost:3001/api/users/`;
     const token = localStorage.getItem("jwt");
 
     try {

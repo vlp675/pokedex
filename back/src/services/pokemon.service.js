@@ -39,8 +39,12 @@ class PkmnTypeService {
         const size = fields.size;
         const skip = (page - 1) * size;
     
-        return await this.PokemonModel.find(filter).skip(skip).limit(size);
-    }
+        const totalCount = await this.PokemonModel.countDocuments(filter);
+        const totalPages = Math.ceil(totalCount / size);
+        const pokemons = await this.PokemonModel.find(filter).skip(skip).limit(size);
+    
+        return { pokemons, totalPages };
+    }    
 
     getPokemonByName(name) {
         return this.PokemonModel.findOne({ name: name });

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPokemon } from "../api/pkmn";
-import PokemonTypeBadge from "../composants/pokemonTypeLabel"; // Import du composant TypeBadge
+import PokemonTypeBadge from "../composants/pokemonTypeLabel";
 
 function PokedexDetail() {
   const { id } = useParams();
@@ -11,8 +11,6 @@ function PokedexDetail() {
 
   useEffect(() => {
     async function fetchData() {
-      console.log('test');
-
       const data = await getPokemon(id);
       if (data) {
         setPokemon(data.pokemon);
@@ -45,8 +43,8 @@ function PokedexDetail() {
           ))}
         </div>
         <p>{pokemon.description}</p>
-        <p><b>Height: </b>{pokemon.height}</p>
-        <p><b>Weight: </b>{pokemon.weight}</p>
+        <p><b>Height: </b>{pokemon.height/10}m</p>
+        <p><b>Weight: </b>{pokemon.weight/10}kg</p>
       </div>
 
       <div>
@@ -61,7 +59,7 @@ function PokedexDetail() {
         <audio ref={audioRef} src={pokemon.soundPath} preload="auto" />
       )}
 
-      <button onClick={() => navigate("/pokedex-list")}>Retour à la liste</button>
+      <button onClick={() => navigate("/")}>Retour à la liste</button>
     </>
   );
 }

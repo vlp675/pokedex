@@ -2,7 +2,6 @@ import './App.css'
 import Login from './auth/login.jsx'
 import Register from './auth/register.jsx'
 import Middleware from './middleware/middleware.jsx'
-import Dashboard from './pokedex/dashboard.jsx'
 import User from './pokedex/user.jsx'
 import Trainer from './pokedex/trainer.jsx'
 import PokedexList from './pokedex/pokedexList.jsx'
@@ -15,18 +14,17 @@ function App() {
     <>
       <Router>
         <Routes>
+          {/* Home avec la liste des pokémons */}
+          <Route path='/' element={
+            <Middleware>
+              <PokedexList />
+            </Middleware>} />
+
           {/* Login */}
-          <Route path='/' element={<Login />} />
+          <Route path='/login' element={<Login />} />
 
           {/* Register */}
           <Route path='/register' element={<Register />} />
-
-          {/* Dashboard */}
-          <Route path='/dashboard' element={
-            <Middleware>
-              <Dashboard />
-            </Middleware>
-          } />
 
           {/* User */}
           <Route path='/user' element={
@@ -39,13 +37,6 @@ function App() {
           <Route path='/trainer' element={
             <Middleware>
               <Trainer />
-            </Middleware>
-          } />
-
-          {/* Pokedex List */}
-          <Route path='/pokedex-list' element={
-            <Middleware>
-              <PokedexList />
             </Middleware>
           } />
 

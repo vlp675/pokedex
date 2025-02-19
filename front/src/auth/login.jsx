@@ -15,7 +15,7 @@ function Login() {
         const response = await login(email, password);
 
         if (response && response.token) {
-            navigate("/dashboard"); 
+            navigate("/"); 
         } else {
             setErrorMessage(response?.message || "Échec de connexion, vérifiez vos identifiants.");
         }

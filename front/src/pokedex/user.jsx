@@ -20,9 +20,11 @@ function User() {
   return (
     <>
       <p>Bonjour</p>
-      <p><b>Trainer :</b> {user.userName}</p>
+      <p><b>User :</b> {user.userName}</p>
+      <p><b>Email :</b> {user.email}</p>
+      <p><b>Role :</b> {user.role}</p>
 
-      <button onClick={() => navigate("/dashboard")}>Retour à la dashboard</button>
+      <button onClick={() => navigate("/")}>Retour à la liste</button>
     </>
   )
 }
