@@ -63,13 +63,13 @@ exports.addTrainer = async (req, res) => {
         const TrainerData = structuredClone(req.body);
 
         const existingTrainer = await trainerService.getTrainerByName(TrainerData.trainerName);
-
+        
         if (existingTrainer) {
             return res.status(400).send({
                 message: `Le dresseur ${TrainerData.trainerName} existe déjà.`
             });
         }
-
+        
         const trainer = await trainerService.createTrainer(req.auth.userId, TrainerData);
 
         res.status(200).send({

@@ -56,17 +56,13 @@ exports.getPokemon = async (req, res) => {
 
         let pokemon;
 
-        if (ObjectId.isValid(req.params.id_or_email)) {
-            pokemon = await pokemonService.getPokemonById(req.params.id_or_email);
+        if (ObjectId.isValid(req.params.id_or_name)) {
+            pokemon = await pokemonService.getPokemonById(req.params.id_or_name);
         } else {
-            pokemon = await pokemonService.getPokemonByName(req.params.id_or_email);
+            pokemon = await pokemonService.getPokemonByName(req.params.id_or_name);
         }
 
-        // if (user.id == req.auth.userId) { //Faut rajouter du code ici
-            res.status(200).send({ pokemon });
-        // } else {
-            // res.status(401).send("Cherche avec une autre API oui !");
-        // }
+        res.status(200).send({ pokemon });
     } catch (err) {
         res.status(400).send(err.message);
     }

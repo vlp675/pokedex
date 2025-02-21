@@ -33,7 +33,7 @@ export async function updateTrainer(updatedTrainer) {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(updatedTrainer) 
+            body: JSON.stringify(updatedTrainer)
         });
 
         if (!response.ok) {
@@ -59,7 +59,7 @@ export async function deleteTrainer(id) {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ id }) 
+            body: JSON.stringify({ id })
         });
 
         if (!response.ok) {
@@ -78,23 +78,24 @@ export async function createTrainer(trainer) {
     const token = localStorage.getItem("jwt");
 
     try {
+        console.log(token)
         const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(trainer) 
+            body: JSON.stringify(trainer)
         });
 
         if (!response.ok) {
-            throw new Error(`Erreur: ${response.status}`);
+            throw new Error(response.status);
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Erreur lors de la mise à jour du dresseur :", error);
+        console.error("Erreur lors de la création du dresseur :", error);
         return error;
     }
 }

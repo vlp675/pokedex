@@ -11,8 +11,7 @@ const trainerSchema = new mongoose.Schema({
         default: "" 
     },
     trainerName: {
-        type: String,
-        required: true
+        type: String
     },
     creationDate: {
         type: Date,

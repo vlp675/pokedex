@@ -7,7 +7,7 @@ router.post('/', pkmnController.addPokemon);
 
 router.post('/region', pkmnController.addRegion);
 
-router.get('/:id_or_email', pkmnController.getPokemon);
+router.get('/:id_or_name', pkmnController.getPokemon);
 
 router.get('/', pkmnController.getPokemons);
 

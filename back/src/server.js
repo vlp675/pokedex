@@ -31,8 +31,6 @@ app.use('/api/users', UserRouter);
 const TrainerRouter = require('./routes/trainer.js');
 app.use('/api/trainer', TrainerRouter);
 
-// const keygen = require('./keygen.js');
-
 //Login
 const LoginRouter = require('./routes/login.js');
 app.use('/api/login', LoginRouter);

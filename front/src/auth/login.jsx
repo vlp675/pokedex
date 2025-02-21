@@ -22,30 +22,32 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>Connexion</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email :</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <div className="login-container">
+            <h2>Pokedex</h2>
+            <form onSubmit={handleSubmit} >
+                <div className="d-flex flex-column align-items-start">
+                    <div>
+                        <label htmlFor="email">Email :</label> <br />
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Mot de passe :</label> <br />
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="password">Mot de passe :</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                {errorMessage && <p>{errorMessage}</p>}
                 <button type="submit">Se connecter</button>
                 <Link to="/">Retourner à la liste</Link>
             </form>

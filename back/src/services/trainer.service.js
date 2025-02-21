@@ -34,13 +34,20 @@ class TrainerService {
   async createTrainer(userId, fields) {
     const user = await this.userService.getUserById(userId);
     if (!user) {
-      throw new Error("Utilisateur non trouvé la team");
+      throw new Error("Utilisateur non trouvé l'équipe");
     }
-
-    fields.userName = user.userName;
-
-    return await this.TrainerModel.create(fields);
+    
+    const trainerFields = { ...fields};
+  
+    if (!trainerFields) {
+      trainerFields = {};
+    }
+  
+    trainerFields.userName = user.userName;
+  
+    return await this.TrainerModel.create(trainerFields);
   }
+  
 
   async markPokemon(userId, pokemonId, isCaptured) {
     const user = await this.userService.getUserById(userId);
@@ -48,7 +55,7 @@ class TrainerService {
       throw new Error("Utilisateur non trouvé.");
     }
 
-    let trainer = await this.TrainerModel.findOne({ username: user.username });
+    let trainer = await this.TrainerModel.findOne({ userName: user.userName });
     if (!trainer) {
       throw new Error("Cet utilisateur n'a pas de trainer");
     }
@@ -67,7 +74,7 @@ class TrainerService {
       }
 
       trainer = await this.TrainerModel.findOneAndUpdate(
-        { username: user.username },
+        { userName: user.userName },
         { $push: { pkmnSeen: pokemonId } },
         { new: true }
       );
@@ -81,7 +88,7 @@ class TrainerService {
         : { $push: { pkmnSeen: pokemonId, pkmnCatch: pokemonId } };
 
       trainer = await this.TrainerModel.findOneAndUpdate(
-        { username: user.username },
+        { userName: user.userName },
         updateFields,
         { new: true }
       );

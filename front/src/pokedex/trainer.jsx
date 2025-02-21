@@ -12,7 +12,7 @@ function Trainer() {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   async function fetchData() {
     try {
       const data = await getTrainer();
@@ -20,7 +20,7 @@ function Trainer() {
         setTrainer(data.trainer);
         setEditedTrainer(data.trainer);
       } else {
-        setTrainer(null); 
+        setTrainer(null);
       }
     } catch {
       setTrainer(null);
@@ -51,7 +51,7 @@ function Trainer() {
 
   const handleCreateClick = async () => {
     try {
-      const createdTrainer = await createTrainer(newTrainer);
+      await createTrainer(newTrainer);
       window.location.reload();
     } catch (error) {
       console.error("Error creating trainer:", error);
@@ -68,32 +68,31 @@ function Trainer() {
   };
 
   return (
-    <div>
-      <p>Bonjour</p>
-
-      {/* If no trainer exists, show the create trainer form */}
+    <div className="trainer-container">
       {!trainer ? (
         <div>
           <h2>Créer un nouveau Trainer</h2>
-          <label>
-            Nom du Trainer:
-            <input
-              type="text"
-              name="trainerName"
-              value={newTrainer.trainerName}
-              onChange={handleCreateInputChange}
-            />
-          </label>
-          <br />
-          <label>
-            Image URL:
-            <input
-              type="text"
-              name="imgUrl"
-              value={newTrainer.imgUrl}
-              onChange={handleCreateInputChange}
-            />
-          </label>
+          <div className="d-flex flex-column align-items-start">
+            <label>
+              Nom du Trainer: <br />
+              <input
+                type="text"
+                name="trainerName"
+                value={newTrainer.trainerName}
+                onChange={handleCreateInputChange}
+              />
+            </label>
+            <br />
+            <label>
+              Image URL: <br />
+              <input
+                type="text"
+                name="imgUrl"
+                value={newTrainer.imgUrl}
+                onChange={handleCreateInputChange}
+              />
+            </label>
+          </div>
           <br />
           <button onClick={handleCreateClick}>Créer le Trainer</button>
           <button onClick={() => navigate("/")}>Retour à la liste</button>
@@ -102,33 +101,36 @@ function Trainer() {
         <>
           {isEditing ? (
             <>
-              <label>
-                Nom du trainer:
-                <input
-                  type="text"
-                  name="trainerName"
-                  value={editedTrainer.trainerName || ""}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <br />
-              <label>
-                Image URL:
-                <input
-                  type="text"
-                  name="imgUrl"
-                  value={editedTrainer.imgUrl || ""}
-                  onChange={handleInputChange}
-                />
-              </label>
+              <div className="d-flex flex-column align-items-start">
+
+                <label>
+                  Nom du trainer: <br />
+                  <input
+                    type="text"
+                    name="trainerName"
+                    value={editedTrainer.trainerName || ""}
+                    onChange={handleInputChange}
+                  />
+                </label>
+                <br />
+                <label>
+                  Image URL: <br />
+                  <input
+                    type="text"
+                    name="imgUrl"
+                    value={editedTrainer.imgUrl || ""}
+                    onChange={handleInputChange}
+                  />
+                </label>
+              </div>
               <br />
               <button onClick={handleSaveClick}>Sauvegarder</button>
             </>
           ) : (
             <>
               <p><b>Trainer :</b> {trainer.trainerName}</p>
-              <div style={{ borderRadius: "100px", border: "2px solid white", height: "100px", width: "100px", margin: "auto" }}>
-                <img src={trainer.imgUrl} alt={trainer.trainerName} width="100" />
+              <div>
+                <img src={trainer.imgUrl} alt={trainer.trainerName} />
               </div>
               <p><b>Pokémon capturé:</b> {trainer.pkmnCatch ? trainer.pkmnCatch.length : 0}</p>
               <p><b>Pokémon vu:</b> {trainer.pkmnSeen ? trainer.pkmnSeen.length : 0}</p>

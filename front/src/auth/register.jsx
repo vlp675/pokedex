@@ -22,7 +22,6 @@ function Register() {
 
     const response = await addUser(userName, email, password);
 
-    console.log(response)
     if (response && response.success) {
       const loginResponse = await login(email, password);
 
@@ -38,50 +37,52 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Inscription</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="userName">Nom d'utilisateur :</label>
-          <input
-            type="text"
-            id="userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
+        <div className="d-flex flex-column align-items-start">
+          <div>
+            <label htmlFor="userName">Nom d'utilisateur :</label> <br />
+            <input
+              type="text"
+              id="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email :</label> <br />
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Mot de passe :</label> <br />
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword">Confirmer le mot de passe :</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="email">Email :</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Mot de passe :</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirmer le mot de passe :</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>}
         <button type="submit">S'inscrire</button>
         <Link to="/">Retourner à la liste</Link>
       </form>
