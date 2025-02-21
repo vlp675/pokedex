@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../api/jwt";
 
-function Login() {
+function Login({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -15,6 +15,7 @@ function Login() {
         const response = await login(email, password);
 
         if (response && response.token) {
+            onLogin(); // Call the onLogin function to update the state in App
             navigate("/");
         } else {
             setErrorMessage(response?.message || "Échec de connexion, vérifiez vos identifiants.");
