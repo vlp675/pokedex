@@ -93,10 +93,10 @@ function PokedexList() {
                 <div className="pokedex-list">
                     <div className="pokedex-decoration-list d-flex justify-content-center align-items-center">
                         <div className="pokedex-decoration-container-point-list d-flex justify-content-center align-items-center">
-                            <img src="src/assets/img/pointDecoration.svg" alt="Pokedex Decoration" className="img-header" />
+                            <img src="src/assets/img/pointDecoration.svg" alt="Pokédex Decoration" className="img-header" />
                         </div>
                         <div className="pokedex-decoration-container-point-list d-flex justify-content-center align-items-center">
-                            <img src="src/assets/img/pointDecoration.svg" alt="Pokedex Decoration" className="img-header" />
+                            <img src="src/assets/img/pointDecoration.svg" alt="Pokédex Decoration" className="img-header" />
                         </div>
                     </div>
 

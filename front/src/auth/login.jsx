@@ -15,7 +15,7 @@ function Login({ onLogin }) {
         const response = await login(email, password);
 
         if (response && response.token) {
-            onLogin(); // Call the onLogin function to update the state in App
+            onLogin(); // J'avoue je savais pas même si on nousl'avais montré en 2ème année
             navigate("/");
         } else {
             setErrorMessage(response?.message || "Échec de connexion, vérifiez vos identifiants.");
@@ -24,7 +24,7 @@ function Login({ onLogin }) {
 
     return (
         <div className="login-container">
-            <h2>Pokedex</h2>
+            <h2>Pokédex</h2>
             <form onSubmit={handleSubmit} >
                 <div className="d-flex flex-column align-items-start">
                     <div>

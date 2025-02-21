@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <div className='header'>
-        <img src="/src/assets/img/headerPokedex.svg" alt="Pokedex Header" className="img-header" />
+        <img src="/src/assets/img/headerPokedex.svg" alt="Pokédex Header" className="img-header" />
       </div>
 
       <div className='pokedex'>
