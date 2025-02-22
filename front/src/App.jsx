@@ -14,7 +14,8 @@ function App() {
 
   useEffect(() => {
     if (isLogged && audioRef.current) {
-      audioRef.current.volume = 0.1; //Pas fort si ça exaspère un peu trop
+      audioRef.current.play();
+      audioRef.current.volume = 0.5; // Volume réduit pour éviter d'exaspérer
     }
   }, [isLogged]);
 

@@ -15,7 +15,7 @@ function Login({ onLogin }) {
         const response = await login(email, password);
 
         if (response && response.token) {
-            onLogin(); // J'avoue je savais pas même si on nousl'avais montré en 2ème année
+            onLogin();
             navigate("/");
         } else {
             setErrorMessage(response?.message || "Échec de connexion, vérifiez vos identifiants.");
